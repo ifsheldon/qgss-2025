@@ -30,6 +30,7 @@ UNSUPPORTED_GATES = [
     "measure",
 ]
 
+
 class TEMOptions(BaseModel):
     tem_max_bond_dimension: int = (500,)
     compute_shadows_bias_from_observable: bool = False
@@ -142,6 +143,7 @@ class TEMInputs:
             if gate in gate_types:
                 raise ValueError(f"Unsupported circuit: gate {gate} is not supported.")
 
+
 def validation(
     arguments: dict,
 ) -> None:
@@ -155,15 +157,22 @@ def validation(
 
 def check_circuit(circuit):
     with io.BytesIO() as buff:
-        np.save(buff, np.round(Statevector(circuit).probabilities(),7), allow_pickle=False)
+        np.save(
+            buff, np.round(Statevector(circuit).probabilities(), 7), allow_pickle=False
+        )
         buff.seek(0)
         serialized_data = buff.read()
     serialized_data = zlib.compress(serialized_data)
     series = base64.standard_b64encode(serialized_data).decode("utf-8")
     hashed_circ = hashlib.sha256(series.encode("utf-8")).hexdigest()
     try:
-        assert hashed_circ == "67b19a21308681a6d3d76e91eb4086773e0d861150f14a186ea30bd12c3aacff"
-        print("Circuit verification successful! The quantum state matches the expected reference.")
+        assert (
+            hashed_circ
+            == "67b19a21308681a6d3d76e91eb4086773e0d861150f14a186ea30bd12c3aacff"
+        )
+        print(
+            "Circuit verification successful! The quantum state matches the expected reference."
+        )
     except AssertionError:
         print(f"Circuit verification failed! Got hash: {hashed_circ}")
         raise

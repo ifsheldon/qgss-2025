@@ -4,7 +4,10 @@ from qiskit.quantum_info import SparsePauliOp
 correct_message = "Congratulations! 🎉 Your answer is correct."
 incorrect_message = "Sorry, your answer is incorrect. Please try again."
 
-def grade_ex1(circuit_width: int, hidden_bitstring: str, shot_count: int, options: dict):
+
+def grade_ex1(
+    circuit_width: int, hidden_bitstring: str, shot_count: int, options: dict
+):
     if not isinstance(circuit_width, int) or circuit_width <= 0:
         return "The circuit width must be a positive integer. Please try again."
 
@@ -14,7 +17,7 @@ def grade_ex1(circuit_width: int, hidden_bitstring: str, shot_count: int, option
     if not isinstance(hidden_bitstring, str) or len(hidden_bitstring) != circuit_width:
         return f"The hidden bitstring must be a string of length {circuit_width}. Please try again."
 
-    if not all(bit in '01' for bit in hidden_bitstring):
+    if not all(bit in "01" for bit in hidden_bitstring):
         return "The hidden bitstring must only contain '0' and '1'. Please try again."
 
     if not isinstance(shot_count, int) or shot_count <= 0:
@@ -44,7 +47,9 @@ def grade_ex1(circuit_width: int, hidden_bitstring: str, shot_count: int, option
     if not isinstance(pub[0], QuantumCircuit):
         return "The pub must contain a QuantumCircuit. Please try again."
 
-    if options.get("backend_name") is None or not isinstance(options.get("backend_name"), str):
+    if options.get("backend_name") is None or not isinstance(
+        options.get("backend_name"), str
+    ):
         return "The backend name must be a non-empty string. Please try again."
 
     if options.get("options") is None or not isinstance(options.get("options"), dict):
@@ -65,7 +70,9 @@ def grade_ex2(n_qubits: int, observable: SparsePauliOp, options: dict):
 
     pauli_strings = observable.to_list()
     if not pauli_strings:
-        return "The observable must contain at least one Pauli string. Please try again."
+        return (
+            "The observable must contain at least one Pauli string. Please try again."
+        )
 
     for pauli_string, _ in pauli_strings:
         if len(pauli_string) != n_qubits:
@@ -93,7 +100,9 @@ def grade_ex2(n_qubits: int, observable: SparsePauliOp, options: dict):
     if not isinstance(pub[0], QuantumCircuit) or not isinstance(pub[1], SparsePauliOp):
         return "The pub must contain a QuantumCircuit and a SparsePauliOp. Please try again."
 
-    if options.get("backend_name") is None or not isinstance(options.get("backend_name"), str):
+    if options.get("backend_name") is None or not isinstance(
+        options.get("backend_name"), str
+    ):
         return "The backend name must be a non-empty string. Please try again."
 
     return correct_message

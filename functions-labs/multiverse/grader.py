@@ -15,6 +15,7 @@ def grade_exercise_1(optimizer_options_ex1: dict) -> None:
 
     print("✅ Exercise 1 solution is correct!")
 
+
 def grade_exercise_2(learners_types: list, learners_proportions: list) -> None:
     """
     Grades Exercise 2 by verifying:
@@ -27,7 +28,7 @@ def grade_exercise_2(learners_types: list, learners_proportions: list) -> None:
         "GaussianNB",
         "KNeighborsClassifier",
         "MLPClassifier",
-        "LogisticRegression"
+        "LogisticRegression",
     }
 
     # Check learners_types
@@ -82,7 +83,10 @@ def grade_exercise_3(optimizer_options_solution: dict) -> None:
         return
 
     # Check num_solutions is >= 100000
-    if not isinstance(optimizer_options_solution["num_solutions"], int) or optimizer_options_solution["num_solutions"] < 100000:
+    if (
+        not isinstance(optimizer_options_solution["num_solutions"], int)
+        or optimizer_options_solution["num_solutions"] < 100000
+    ):
         print("❌ 'num_solutions' must be an integer >= 100000.")
         return
 
@@ -99,6 +103,3 @@ def grade_exercise_3(optimizer_options_solution: dict) -> None:
 
     # All checks passed
     print("✅ Exercise 3 solution is correct!")
-
-
-
